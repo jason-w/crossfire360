@@ -1,0 +1,318 @@
+﻿body
+{
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica, sans-serif;
+	font-size: 13px;
+	background-color: #EEEEEE;
+}
+
+div, p, h1, h2, h3, form, table, td, th
+{
+	margin: 0;
+	padding: 0;
+}
+
+table
+{
+	border-spacing: 0;
+}
+
+form
+{
+	display: inline;
+}
+
+img
+{
+	border: 0;
+}
+
+.clearer
+{
+	clear: both;
+}
+
+.clearleft
+{
+	clear: left;
+}
+
+.clearright
+{
+	clear: right;
+}
+
+a:link
+{
+	color: #003de8;
+}
+
+a:visited
+{
+	color: #930d85;
+}
+
+a:hover, a:hover b
+{
+	color: #000;
+}
+
+
+img
+{
+	border: 0 none;
+}
+
+#main
+{
+	background-color: #EEEEEE;
+}
+
+#mainContent
+{
+	margin: 0 auto;
+	padding: 10px;
+	width: 795px;
+}
+
+#tagline
+{
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	margin-bottom: 10px;
+	padding: 10px;
+	width: 773px;
+}
+
+#results
+{
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	margin-right: 180px;
+	padding: 10px;
+	width: 593px;
+}
+
+#tweetmeme
+{	
+
+}
+
+#digg
+{	
+	margin-top: 15px;
+}
+
+#topshare
+{
+	float:right;
+}
+
+#headerblock
+{
+	width: 525px;
+}
+
+#questionblock
+{
+	background-color: #E0ECFF;
+	padding-top: 10px;
+	padding: 10px;
+	margin-bottom: 40px;
+}
+
+#question h2
+{
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 23px;
+}
+
+#questionstatus
+{
+	font-size: 12px;
+	font-weight: normal;
+	margin-top: 5px;	
+	color: gray;	
+}
+
+#noresponse h2
+{
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 23px;
+	margin-top: 20px;
+	margin-bottom: 800px;
+	text-align: center;
+}
+
+#question h2
+{
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 23px;
+	margin-bottom: 20px;
+}
+
+#responses h2
+{
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 23px;
+	margin-bottom: 20px;
+}
+
+#responses img
+{
+	vertical-align:text-bottom;
+}
+
+#results li
+{
+	border-bottom: 1px dashed #CCCCCC;
+	margin: 0;
+	overflow: hidden;
+	padding: 15px 5px;
+}
+
+#results ul
+{
+	border-top: 1px dashed #CCCCCC;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#results li div.avatar
+{
+	float: left;
+	height: 48px;
+	overflow: hidden;
+	width: 48px;
+}
+
+#results li .msg
+{
+	font-size: 14px;
+	line-height: 17px;
+	margin-bottom: 5px;
+	margin-left: 58px;
+}
+
+#results li .info, #results li .debug
+{
+	color: #777777;
+	font-size: 13px;
+	margin-left: 58px;
+}
+
+#results li .info .source a:visited
+{
+	color: #777777;
+}
+
+#results li .info .source a
+{
+	color: #777777;
+	font-style: italic;
+	text-decoration: none;
+}
+
+#results li div.avatar img
+{
+	height: 48px;
+	width: 48px;
+}
+
+#sidebar
+{
+	float: right;
+	width: 170px;
+}
+
+#sidebar .module
+{
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	color: #777777;
+	margin: 0 0 10px;
+	padding: 10px;
+	width: 148px;
+}
+
+#sidebar .module p
+{
+	margin-bottom: 20px;
+}
+
+#sidebar #translator
+{
+	color: #000000;
+}
+
+#sidebar .module h3
+{
+	color: #000000;
+	font-size: 13px;
+	font-weight: normal;
+	margin-bottom: 5px;
+}
+
+#results #pager-bottom.paginator
+{
+	margin-bottom: 0;
+}
+
+#sidebar .list ul
+{
+	list-style-type: none;
+	margin: 0 0 5px;
+	padding: 0;
+}
+
+#sidebar .list li
+{
+	color: #777777;
+	margin: 0 0 12px;
+	padding: 0;
+}
+
+#results .paginator
+{
+	margin: 10px 0;
+	text-align: center;
+}
+
+.lit a:link, a.lit:link
+{
+	color: #497BB6;
+}
+
+.litnv a:link, a.litnv:link
+{
+	color: #497BB6;
+}
+
+#share {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../../Content/share_sprite.gif) no-repeat scroll 0 2px;
+	display:block;
+	padding:0px 0 4px 25px;
+}
+
