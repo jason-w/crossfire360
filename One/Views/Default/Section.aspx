@@ -9,8 +9,8 @@
 <body>
     <div id="main">
         <div id="mainContent">
-            <div id="tagline">
-                <H2>One Question. One Day. 360&deg; Perspective.</H2>
+            <div id="header">
+                <h2>One Question. One Day. 360&deg; Perspective.</h2>
             </div>
             <div id="sidebar">
                 <%foreach(SectionSummaryViewData summary in Model.SectionSummary){ %>
@@ -42,7 +42,7 @@
                     <p>Want to help? We sure can use some design help!  Email us at <a href="mailto:help@crossfire360.com">help@crossfire360.com</a> if working for free is your thing.</p>
                 </div>
             </div>
-            <div id="results">
+            <div id="content">
                 <div id="topshare">
                     <div id="tweetmeme">
                         <script type="text/javascript">
@@ -54,21 +54,13 @@
                         <script src="http://digg.com/tools/diggthis.js" type="text/javascript"></script> 
                     </div>
                 </div>
-                <div id="headerblock">
-                    <div id="question">
-                        <h2><b>Today's <%=Model.SectionName%> Question:</b></h2>
-                    </div>
-                    <div id="questionblock" style="background-color: #<%=Model.SectionColor%>;">
-                        <div id="question">
+                <div id="contentheader">
+                    <h2><b>Today's <%=Model.SectionName%> Question:</b></h2>
+                    <div id="question" style="background-color: #<%=Model.SectionColor%>;">
                             <h2><%=Model.QuestionTwitterfied%></h2>
-                        </div>
-                        <div id="questionstatus">
-                            This question was posted on <%=Model.QuestionRefreshedDate.ToShortDateString()%> 10PM PT.  Next question: <%=Model.QuestionRefreshedDate.AddDays(1).ToShortDateString()%> 10PM PT.
-                        </div>
+                            <h3>This question was posted on <%=Model.QuestionRefreshedDate.ToShortDateString()%> 10PM PT and it will change again on <%=Model.QuestionRefreshedDate.AddDays(1).ToShortDateString()%> 10PM PT.</h3>    
                     </div>
-                    <div id="responses">
-                        <h2><b>Responses (<img src="../../Content/twitter-icon.jpg" /> <a href="http://twitter.com/?status=%23cf360">tweet yours</a>):</b></h2>
-                    </div>
+                    <h2><b>Responses (<img src="../../Content/twitter-icon.jpg" /> <a href="http://twitter.com/?status=%23cf360">tweet yours</a>):</b></h2>
                 </div>
                 <ul>
                 <%if (Model.Responses.Count == 0) {%>
