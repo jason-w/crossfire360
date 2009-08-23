@@ -16,16 +16,16 @@ namespace One
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                "Pagination",                                              // Route name
-                "page/{page}/{maxid}",                           // URL with parameters
-                new { controller = "Default", action = "paging", page = 1, maxid = long.MinValue }  // Parameter defaults
-            );
+            //routes.MapRoute(
+            //    "Pagination",                                              // Route name
+            //    "page/{page}/{maxid}",                           // URL with parameters
+            //    new { controller = "Default", action = "paging", page = 1, maxid = long.MinValue }  // Parameter defaults
+            //);
 
             routes.MapRoute(
                 "Default",                                              // Route name
-                "{controller}/{action}/{id}",                           // URL with parameters
-                new { controller = "Default", action = "Index", id = "" }  // Parameter defaults
+                "{section}/{page}",                           // URL with parameters
+                new { controller = "Default", action = "Index", section = "", page = 1 }  // Parameter defaults
             );
 
         }

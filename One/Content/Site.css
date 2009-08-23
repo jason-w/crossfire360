@@ -44,19 +44,16 @@ img
 	clear: right;
 }
 
-a:link
+a:link, a:visited
 {
-	color: #003de8;
-}
-
-a:visited
-{
-	color: #930d85;
+	color: #004287;
+	text-decoration: none;
 }
 
 a:hover, a:hover b
 {
-	color: #000;
+	color: #004287;
+	text-decoration: underline;
 }
 
 
@@ -101,6 +98,15 @@ img
 	margin-right: 180px;
 	padding: 10px;
 	width: 593px;
+}
+
+.summary
+{
+	padding: 10px;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 23px;
+	margin-bottom: 20px;
 }
 
 #tweetmeme
@@ -259,9 +265,16 @@ img
 	margin-bottom: 20px;
 }
 
-#sidebar #translator
+.module a:link, a:link, a:visited
 {
-	color: #000000;
+	color: #777777;
+	text-decoration: none;
+}
+
+.module a:hover
+{
+	color: #497BB6;
+	text-decoration: underline;
 }
 
 #sidebar .module h3
@@ -291,12 +304,6 @@ img
 	padding: 0;
 }
 
-#results .paginator
-{
-	margin: 10px 0;
-	text-align: center;
-}
-
 .lit a:link, a.lit:link
 {
 	color: #497BB6;
@@ -305,6 +312,12 @@ img
 .litnv a:link, a.litnv:link
 {
 	color: #497BB6;
+}
+
+#results .paginator
+{
+	margin: 10px 0;
+	text-align: center;
 }
 
 #share {
