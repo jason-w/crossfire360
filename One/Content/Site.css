@@ -196,6 +196,11 @@ img
 	margin-bottom: 10px;
 }
 
+#noresponse
+{
+	border-top: 1px dashed #CCCCCC;
+}
+
 #noresponse h2
 {
 	font-size: 20px;
