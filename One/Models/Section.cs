@@ -95,7 +95,7 @@ namespace One.Models
                     });
                 }
 
-                if (DateTime.Now.Hour >= 22)
+                if (DateTime.Now.Hour >= 8)
                     respPage.QuestionRefreshedDate = DateTime.Today;
                 else
                     respPage.QuestionRefreshedDate = DateTime.Today.AddDays(-1);

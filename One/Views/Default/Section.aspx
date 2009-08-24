@@ -47,7 +47,7 @@
         <h2><b>Today's <%=Model.SectionName%> Question:</b></h2>
         <div id="question" style="background-color: #<%=Model.SectionColor%>;">
                 <h2><%=Model.QuestionTwitterfied%></h2>
-                <h3>This question was posted on <%=Model.QuestionRefreshedDate.ToShortDateString()%> 10PM PT and it will change again on <%=Model.QuestionRefreshedDate.AddDays(1).ToShortDateString()%> 10PM PT.</h3>    
+                <h3>This question was posted on <%=Model.QuestionRefreshedDate.ToShortDateString()%> 8AM PT and it will change again on <%=Model.QuestionRefreshedDate.AddDays(1).ToShortDateString()%> 8AM PT.</h3>    
         </div>
         <h2><b>Responses (<img src="../../Content/twitter-icon.jpg" /> <a href="http://twitter.com/?status=%23<%=Model.SectionResponsesTwitterHashTag%>">tweet yours</a>):</b></h2>
     </div>                
