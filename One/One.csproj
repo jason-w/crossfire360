@@ -73,6 +73,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ViewData\AboutViewData.cs" />
+    <Compile Include="ViewData\BaseViewData.cs" />
     <Compile Include="ViewData\ResponseViewData.cs" />
     <Compile Include="ViewData\ResponsePageViewData.cs" />
     <Compile Include="Models\Section.cs" />

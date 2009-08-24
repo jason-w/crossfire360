@@ -5,8 +5,8 @@ using System.Web;
 
 namespace One.ViewData
 {
-    public class AboutViewData
+    public class AboutViewData : BaseViewData
     {
-        public List<SectionSummaryViewData> SectionSummary { get; set; }
+
     }
 }

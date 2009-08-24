@@ -6,7 +6,7 @@ using One.Models;
 
 namespace One.ViewData
 {
-    public class ResponsePageViewData
+    public class ResponsePageViewData : BaseViewData
     {
         public string SectionName { get; set; }
         public string SectionColor { get; set; }
@@ -18,7 +18,6 @@ namespace One.ViewData
         public string NextPageHtml { get; set; }
         public List<ResponseViewData> Responses { get; set; }
         public DateTime QuestionRefreshedDate { get; set; }
-        public List<SectionSummaryViewData> SectionSummary { get; set; }
         public string SectionResponsesTwitterHashTag { get; set; }
     }
 }
