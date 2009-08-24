@@ -33,7 +33,9 @@
                 <%} %>
             </div>
             <div id="content">
-                <p>Welcome to Crossfire 360. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel sem magna. Praesent eget volutpat metus. Suspendisse vel enim ut tortor iaculis fringilla. Nunc congue, urna eget ultricies fermentum, lacus augue fringilla leo, vel vulputate urna tortor sed dui. Phasellus hendrerit sollicitudin velit ac hendrerit. Aenean rhoncus condimentum urna, a hendrerit tortor vehicula eu. Curabitur eget augue mi.</p>
+                <div id="boring">
+                    <h2>working on it...</h2>
+                </div>
             </div>
             <div id="footer">
                 <a href="/about/">About</a> | <a href="/about/terms-of-service">Terms of Service</a> | <a href="/about/privacy-policy">Privacy Policy</a>

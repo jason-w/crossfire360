@@ -23,6 +23,9 @@ namespace One.Controllers
                 case "TERMS-OF-SERVICE":
                     view = "TermsOfService";
                     break;
+                case "COPYRIGHT":
+                    view = "Copyright";
+                    break;
             }
 
             AboutViewData aboutViewData = new AboutViewData();
