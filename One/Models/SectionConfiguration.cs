@@ -10,6 +10,7 @@ namespace One.Models
         public string SectionName { get; set; }
         public string SectionColor { get; set; }
         public string SectionQuestionTwitterId { get; set; }
+        public string SectionQuestionTwitterPassword { get; set; }
         public string SectionResponsesTwitterHashTag { get; set; }
     }
 }

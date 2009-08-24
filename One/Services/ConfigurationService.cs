@@ -15,20 +15,23 @@ namespace One.Services
                 new SectionConfiguration{
                      SectionName= "Politics",
                      SectionColor = "C3D9FF",
-                     SectionQuestionTwitterId = "andersoncooper",
-                     SectionResponsesTwitterHashTag = "politics"
+                     SectionQuestionTwitterId = "cf360_politics",
+                     SectionQuestionTwitterPassword = "4thecr0ssfire",
+                     SectionResponsesTwitterHashTag = "cf360p"
                 }, 
                 new SectionConfiguration{
                      SectionName= "Sports",
                      SectionColor = "CDEB8B",
-                     SectionQuestionTwitterId = "THE_REAL_SHAQ",
-                     SectionResponsesTwitterHashTag = "sports"
+                     SectionQuestionTwitterId = "cf360_sports",
+                     SectionQuestionTwitterPassword = "4thecr0ssfire",
+                     SectionResponsesTwitterHashTag = "cf360s"
                 },
                 new SectionConfiguration{
                      SectionName= "Technology",
                      SectionColor = "FFFF88",
-                     SectionQuestionTwitterId = "gigaom",
-                     SectionResponsesTwitterHashTag = "apple"
+                     SectionQuestionTwitterId = "cf360_tech",
+                     SectionQuestionTwitterPassword = "4thecr0ssfire",
+                     SectionResponsesTwitterHashTag = "cf360t"
                 }
             };
         }

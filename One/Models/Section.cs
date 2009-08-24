@@ -17,6 +17,7 @@ namespace One.Models
         private string _sectionName;
         private string _sectionColor;
         private string _sectionQuestionTwitterId;
+        private string _sectionQuestionTwitterPassword;
         private string _sectionResponsesTwitterHashTag;
 
         private DateTime _nextUpdateDateTime = DateTime.Now;
@@ -26,11 +27,12 @@ namespace One.Models
         private long _cachedQuestionId;
         private SortedDictionary<int, ResponsePageViewData> _cachedResponsePages = new SortedDictionary<int, ResponsePageViewData>();
 
-        public Section(string sectionName, string sectionColor, string sectionQuestionTwitterId, string sectionResponsesTwitterHashTag)
+        public Section(string sectionName, string sectionColor, string sectionQuestionTwitterId, string sectionQuestionTwitterPassword, string sectionResponsesTwitterHashTag)
         {
             _sectionName = sectionName;
             _sectionColor = sectionColor;
             _sectionQuestionTwitterId = sectionQuestionTwitterId;
+            _sectionQuestionTwitterPassword = sectionQuestionTwitterPassword;
             _sectionResponsesTwitterHashTag = sectionResponsesTwitterHashTag;
         }
 
@@ -108,6 +110,7 @@ namespace One.Models
         {
             // Get the public timeline
             var twitter = FluentTwitter.CreateRequest()
+                .AuthenticateAs(_sectionQuestionTwitterId, _sectionQuestionTwitterPassword)
                 .Statuses()
                 .OnUserTimeline()
                 .For(_sectionQuestionTwitterId)
@@ -119,9 +122,9 @@ namespace One.Models
 
             var statuses = request.AsStatuses();
 
-            if (statuses == null)
+            if (statuses == null || statuses.Count() == 0)
             {
-                //Do some error handling
+                
             }
             else
             {

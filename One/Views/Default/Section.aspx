@@ -73,14 +73,14 @@
                             <h3>This question was posted on <%=Model.QuestionRefreshedDate.ToShortDateString()%> 10PM PT and it will change again on <%=Model.QuestionRefreshedDate.AddDays(1).ToShortDateString()%> 10PM PT.</h3>    
                     </div>
                     <h2><b>Responses (<img src="../../Content/twitter-icon.jpg" /> <a href="http://twitter.com/?status=%23cf360">tweet yours</a>):</b></h2>
-                </div>
-                <ul>
+                </div>                
                 <%if (Model.Responses.Count == 0) {%>
                 <div id="noresponse">
-                    <h2>Hurry, be the first!</h2>
+                    <h2>Hurry, be the first!</h2>                    
+                    <div id="noresponseblank">&nbsp;</div>
                 </div>
                 <% }else{ %>
-                
+                <ul>
                     <%foreach (ResponseViewData response in Model.Responses)
                       { %>
                     <li class="result">

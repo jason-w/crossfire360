@@ -188,7 +188,7 @@ img
 #question
 {
 	padding: 10px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 #question h2
@@ -202,10 +202,13 @@ img
 	font-weight: normal;
 	line-height: 23px;
 	margin-top: 20px;
-	margin-bottom: 800px;
 	text-align: center;
 }
 
+#noresponseblank
+{
+	height: 450px;
+}
 
 #responses img
 {

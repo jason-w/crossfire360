@@ -41,14 +41,13 @@
                     <div class="summary" style="background-color:#<%=summary.SectionColor%>;">
                         <%=summary.SectionName %>: <%=summary.SectionQuestion %>
                     </div>
-                    <div class="recent">Most recent response: (<a href="/<%=summary.SectionName%>">view the rest</a>)</div>
-                    <ul>
+                    <div class="recent">Most recent response: (<a href="/<%=summary.SectionName%>">view the rest</a>)</div>                    
                     <%if (summary.Responses.Count == 0) {%>
                     <div id="noresponse">
                         <h2>Hurry, be the first!</h2>
                     </div>
                     <% }else{ %>
-                    
+                    <ul>
                         <%foreach (ResponseViewData response in summary.Responses)
                           { %>
                         <li class="result">

@@ -18,7 +18,7 @@ namespace One.Models
 
             foreach (SectionConfiguration config in configs)
             {
-                _cachedSections.Add(config.SectionName.ToUpper(), new Section(config.SectionName, config.SectionColor, config.SectionQuestionTwitterId, config.SectionResponsesTwitterHashTag));
+                _cachedSections.Add(config.SectionName.ToUpper(), new Section(config.SectionName, config.SectionColor, config.SectionQuestionTwitterId, config.SectionQuestionTwitterPassword, config.SectionResponsesTwitterHashTag));
             }
         }
 
