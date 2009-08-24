@@ -12,6 +12,8 @@ namespace One.Models
 {
     public class Section
     {
+        private const int ITEMS_PER_PAGE = 10;
+
         private string _sectionName;
         private string _sectionColor;
         private string _sectionQuestionTwitterId;
@@ -139,7 +141,7 @@ namespace One.Models
                     .Query()
                     .ContainingHashTag(_sectionResponsesTwitterHashTag)
                     .Since(_cachedQuestionId)
-                    .Take(15)
+                    .Take(ITEMS_PER_PAGE)
                     .Skip(page)
                     .AsJson();
 

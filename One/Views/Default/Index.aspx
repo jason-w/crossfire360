@@ -9,23 +9,68 @@
 <body>
     <div id="main">
         <div id="mainContent">
-            <div id="tagline">
-                <H2>One Question. One Day. 360&deg; Perspective.</H2>
+            <div id="header">
+                <div id="slogan">
+                    <h2>One Day. One Question. 360&deg; Perspective.</h2>
+                </div>
+                <div id="suggest">
+                    <a href="mailto:suggestion@crossfire360.com">Suggestion a question</a>
+                </div>
             </div>
             <div id="sidebar">
+                <div class="module">
+                    <div class="nav">
+                        <a href="/">Home</a>
+                    </div>
+                </div> 
                 <%foreach(SectionSummaryViewData summary in Model.SectionSummary){ %>
                 <div class="module" style="background-color: #<%=summary.SectionColor%>;">
-                    <a href="/<%=summary.SectionName%>"><%=summary.SectionName %></a>
+                    <div class="nav">
+                        <a href="/<%=summary.SectionName%>"><%=summary.SectionName %></a>
+                    </div>
                 </div>
                 <%} %>
             </div>
-            <div id="results">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <!--
+            <div id="content">
+                <p>Welcome to Crossfire 360. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel sem magna. Praesent eget volutpat metus. Suspendisse vel enim ut tortor iaculis fringilla. Nunc congue, urna eget ultricies fermentum, lacus augue fringilla leo, vel vulputate urna tortor sed dui. Phasellus hendrerit sollicitudin velit ac hendrerit. Aenean rhoncus condimentum urna, a hendrerit tortor vehicula eu. Curabitur eget augue mi.</p>
+            </div>
+            -->
                 <%foreach(SectionSummaryViewData summary in Model.SectionSummary){ %>
+            <div id="content">
                     <div class="summary" style="background-color:#<%=summary.SectionColor%>;">
-                        <%=summary.SectionQuestion %>
+                        <%=summary.SectionName %>: <%=summary.SectionQuestion %>
                     </div>
+                    <div class="recent">Most recent response: (<a href="/<%=summary.SectionName%>">view the rest</a>)</div>
+                    <ul>
+                    <%if (summary.Responses.Count == 0) {%>
+                    <div id="noresponse">
+                        <h2>Hurry, be the first!</h2>
+                    </div>
+                    <% }else{ %>
+                    
+                        <%foreach (ResponseViewData response in summary.Responses)
+                          { %>
+                        <li class="result">
+                            <div class="avatar">
+                               <%=response.AvatarHtml%>
+                            </div>
+                            <div class="msg">
+                               <%=response.MessageHtml%>
+                            </div>
+                            <div class="info">
+                                <%=response.RelativeTimeHtml%> <span class="source">from <%=response.SourceHtml%> </span>· <%=response.ReplyLinkHtml%> · <%=response.ViewTweetLinkHtml%>
+                            </div>
+                            <p class="clearleft"></p>
+                        </li>
+                        <%} %>
+                    
+                    <% } %>
+                    </ul>
+            </div>
                 <%} %>
+            <div id="footer">
+                <a href="/about/">About</a> | <a href="/about/terms-of-service">Terms of Service</a> | <a href="/about/privacy-policy">Privacy Policy</a>
             </div>
         </div>
     </div>

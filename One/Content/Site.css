@@ -85,6 +85,47 @@ img
 	margin-bottom: 10px;
 	padding: 10px;
 	width: 773px;
+	height: 25px;
+}
+
+#slogan
+{
+	width: 500;
+	float: left;
+}
+
+#suggest
+{
+	float: right;
+	width: 200px;
+	text-align: right;
+	margin-top: 5px;
+}
+
+#footer
+{
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	margin-right: 180px;
+	padding: 10px;
+	width: 593px;	
+	color: #777777;
+}
+
+#footer a:link, #footer a:link, #footer a:visited
+{
+	color: #777777;
+	text-decoration: none;
+}
+
+#footer a:hover
+{
+	color: #497BB6;
+	text-decoration: underline;
 }
 
 #content
@@ -97,7 +138,8 @@ img
 	border: 1px solid #CCCCCC;
 	margin-right: 180px;
 	padding: 10px;
-	width: 593px;
+	width: 593px;	
+	margin-bottom: 10px;
 }
 
 .summary
@@ -178,6 +220,12 @@ img
 	padding: 15px 5px;
 }
 
+#content .recent
+{
+	font-size: 14px;
+	color: Gray;	
+}
+
 #content ul
 {
 	border-top: 1px dashed #CCCCCC;
@@ -250,6 +298,18 @@ img
 #sidebar .module p
 {
 	margin-bottom: 20px;
+}
+
+.module .nav a:link, .module .nav a:link, .module .nav a:visited
+{
+	color: #000;
+	text-decoration: none;
+}
+
+.module .nav a:hover
+{
+	color: #000;
+	text-decoration: underline;
 }
 
 .module a:link, .module a:link, .module a:visited

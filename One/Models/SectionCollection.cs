@@ -40,7 +40,9 @@ namespace One.Models
                     {
                         SectionName = s.SectionName,
                         SectionColor = s.SectionColor,
-                        SectionQuestion = s.SectionQuestionTwitterfied
+                        SectionQuestion = s.SectionQuestionTwitterfied,
+                        Responses = (from r in s.GetResponsePageViewData(1).Responses
+                                     select r).Take(1).ToList(),
                     }).ToList();
         }
     }

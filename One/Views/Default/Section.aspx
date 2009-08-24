@@ -10,16 +10,28 @@
     <div id="main">
         <div id="mainContent">
             <div id="header">
-                <h2>One Question. One Day. 360&deg; Perspective.</h2>
+                <div id="slogan">
+                    <h2>One Day. One Question. 360&deg; Perspective.</h2>
+                </div>
+                <div id="suggest">
+                    <a href="mailto:suggestion@crossfire360.com">Suggestion a question</a>
+                </div>
             </div>
             <div id="sidebar">
+                <div class="module">
+                    <div class="nav">
+                        <a href="/">Home</a>
+                    </div>
+                </div>            
                 <%foreach(SectionSummaryViewData summary in Model.SectionSummary){ %>
                 <div class="module" style="background-color: #<%=summary.SectionColor%>;">
-                    <a href="/<%=summary.SectionName%>"><%=summary.SectionName %></a>
+                    <div class="nav">
+                        <a href="/<%=summary.SectionName%>"><%=summary.SectionName %></a>
+                    </div>                        
                 </div>
                 <%} %>
                 <div class="module">
-                    <p>To particpate in today's crossfire, tweet your response with hashtag <span style="background-color: #<%=Model.SectionColor%>;">#<%=Model.SectionResponsesTwitterHashTag%></span></p>                    <p>Follow us on <a href="http://www.twitter.com/cf360">@cf360</a></p>                    <p>To suggest a question, email us @ <a href="mailto:q@crossfire360.com">q@crossfire360.com</a></p>                </div>
+                    <p>To particpate in today's crossfire, tweet your response with hashtag <span style="background-color: #<%=Model.SectionColor%>;">#<%=Model.SectionResponsesTwitterHashTag%></span></p>                    <p>Follow us on <a href="http://www.twitter.com/cf360">@cf360</a></p>                </div>
                 <div class="module list">
                     <h3>
                         <b>Share</b>
@@ -92,6 +104,9 @@
                     <%=Model.CurrentPageHtml%>          
                     <%=Model.NextPageHtml%>     
                 </div>
+            </div>
+            <div id="footer">
+                <a href="/about/">About</a> | <a href="/about/terms-of-service">Terms of Service</a> | <a href="/about/privacy-policy">Privacy Policy</a>
             </div>
         </div>
     </div>
