@@ -23,6 +23,12 @@ namespace One
             //);
 
             routes.MapRoute(
+                "About",                                                        // Route name
+                "About/{section}",                                               // URL with parameters
+                new { controller = "About", action = "Index", section = ""}     // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Default",                                              // Route name
                 "{section}/{page}",                           // URL with parameters
                 new { controller = "Default", action = "Index", section = "", page = 1 }  // Parameter defaults
