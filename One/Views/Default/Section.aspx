@@ -53,7 +53,7 @@
     </div>    
     <%if (Model.State != ResponsePageViewDataState.UpdateToDateData) { %>
     <div id="outofdate">
-        Yikes!  Looks like Twitter is taking a nap right now.  We'll bring you the latest responses as soon as Twitter wakes up.  The responses you see blow are at least <%= ((TimeSpan) (DateTime.Now - Model.LastUpdatedDateTime)).Seconds%> seconds old.
+        Yikes!  Looks like Twitter is taking a nap right now.  We'll bring you the latest responses as soon as Twitter wakes up.  The responses you see blow are at least <%= ((TimeSpan) (DateTime.Now - Model.LastUpdatedDateTime)).TotalSeconds()%> seconds old.
     </div>            
     <% } %>
     <%if (Model.Responses.Count == 0) {%>

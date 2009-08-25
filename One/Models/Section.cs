@@ -15,6 +15,7 @@ namespace One.Models
     public class Section
     {
         private const int ITEMS_PER_PAGE = 10;
+        private const int TWIITER_CONNECT_TIMEOUT = 750; // in milliseconds
 
         private string _sectionName;        
         private string _sectionColor;
@@ -87,7 +88,7 @@ namespace One.Models
         {
             if (DateTime.Now >= _nextRawQuestionUpdateDateTime)
             {
-                CallWithTimeout(GetRawQuestion, 1000);
+                CallWithTimeout(GetRawQuestion, TWIITER_CONNECT_TIMEOUT);
                 if (_isLastRawQuestionGetSuccessful && !_isRawQuestionSameAsBefore)
                 {
                     _cachedResponsePages.Clear();
@@ -104,7 +105,7 @@ namespace One.Models
 
             if (!_nextRawResponsesUpdateDateTime.ContainsKey(page) || DateTime.Now >= _nextRawResponsesUpdateDateTime[page])
             {
-                CallWithTimeout(GetRawResponses, page, 1000);
+                CallWithTimeout(GetRawResponses, page, TWIITER_CONNECT_TIMEOUT);
             }
 
             if (!_cachedResponsePages.ContainsKey(page) && _cachedRawResponses.ContainsKey(page))
@@ -207,7 +208,7 @@ namespace One.Models
                     _cachedRawQuestion = newRawQustion;
                     _isLastRawQuestionGetSuccessful = true;
                     _lastSuccessfulRawQuestionGet = DateTime.Now;
-                    _nextRawQuestionUpdateDateTime = DateTime.Now.AddMinutes(1);
+                    _nextRawQuestionUpdateDateTime = DateTime.Now.AddSeconds(new Random().Next(45,75));
                 }
             }
             catch
@@ -240,7 +241,7 @@ namespace One.Models
                     _cachedRawResponses[page] = searchResult;
                     _isLastRawResponsesGetSuccessful[page] = true;
                     _lastSuccessfulRawResponsesGet[page] = DateTime.Now;
-                    _nextRawResponsesUpdateDateTime[page] = DateTime.Now.AddMinutes(1);
+                    _nextRawResponsesUpdateDateTime[page] = DateTime.Now.AddSeconds(new Random().Next(45, 75));
                     _cachedResponsePages.Remove(page);
                 }
             }
