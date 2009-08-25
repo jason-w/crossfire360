@@ -19,6 +19,7 @@ namespace One.ViewData
         public string SectionName { get; set; }
         public string SectionColor { get; set; }
         public string Question { get; set; }
+        public string QuestionSEOFriendly { get; set; }
         public string QuestionHtmlEncoded { get; set; }
         public string QuestionTwitterfied { get; set; }
         public string CurrentPageHtml { get; set; }

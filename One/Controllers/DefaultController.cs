@@ -14,7 +14,7 @@ namespace One.Controllers
     public class DefaultController : Controller
     {
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult Index(string section, int page)
+        public ActionResult Index(string section, string seoFriendlyQuestion, int page)
         {
             if (page < 1)
                 page = 1;

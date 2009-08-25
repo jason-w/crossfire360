@@ -30,8 +30,8 @@ namespace One
 
             routes.MapRoute(
                 "Default",                                              // Route name
-                "{section}/{page}",                           // URL with parameters
-                new { controller = "Default", action = "Index", section = "", page = 1 }  // Parameter defaults
+                "{section}/{seofriendlyquestion}/{page}",                           // URL with parameters
+                new { controller = "Default", action = "Index", section = "", seofriendlyquestion = "", page = 1 }  // Parameter defaults
             );
 
         }

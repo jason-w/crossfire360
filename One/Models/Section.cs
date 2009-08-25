@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading;
+using System.Text;
 using Dimebrain.TweetSharp.Fluent;
 using Dimebrain.TweetSharp.Model;
 using Dimebrain.TweetSharp.Extensions;
@@ -15,7 +16,7 @@ namespace One.Models
     {
         private const int ITEMS_PER_PAGE = 10;
 
-        private string _sectionName;
+        private string _sectionName;        
         private string _sectionColor;
         private string _sectionQuestionTwitterId;
         private string _sectionQuestionTwitterPassword;
@@ -25,6 +26,7 @@ namespace One.Models
         private SortedDictionary<int, DateTime> _nextRawResponsesUpdateDateTime = new SortedDictionary<int, DateTime>();
 
         private string _cachedQuestion = string.Empty;
+        private string _cachedQuestionSEOFriendly = string.Empty;
         private string _cachedQuestionHtmlEncoded = string.Empty;
         private string _cachedQuestionTwitterfied = string.Empty;
         private long _cachedQuestionId;
@@ -70,6 +72,17 @@ namespace One.Models
             }
         }
 
+        public string SectionQuestionSEOFriendly
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_cachedQuestion))
+                    GetResponsePageViewData(1);
+
+                return _cachedQuestionSEOFriendly;
+            }
+        }
+
         public ResponsePageViewData GetResponsePageViewData(int page)
         {
             if (DateTime.Now >= _nextRawQuestionUpdateDateTime)
@@ -84,6 +97,7 @@ namespace One.Models
                     _cachedQuestion = _cachedRawQuestion.Text;
                     _cachedQuestionHtmlEncoded = HttpUtility.HtmlEncode(_cachedQuestion);
                     _cachedQuestionTwitterfied = TwitterHelper.TwitterfyText(_cachedQuestion);
+                    _cachedQuestionSEOFriendly = ToFriendlyUrl(_cachedQuestion);
                     _cachedQuestionId = _cachedRawQuestion.Id;
                 }
             }
@@ -102,13 +116,14 @@ namespace One.Models
                 respPage.SectionName = _sectionName;
                 respPage.SectionColor = _sectionColor;
                 respPage.Question = _cachedQuestion;
+                respPage.QuestionSEOFriendly = _cachedQuestionSEOFriendly;
                 respPage.QuestionHtmlEncoded = _cachedQuestionHtmlEncoded;
                 respPage.QuestionTwitterfied = _cachedQuestionTwitterfied;
                 respPage.SectionResponsesTwitterHashTag = _sectionResponsesTwitterHashTag;
 
                 respPage.CurrentPageHtml = TwitterHelper.TwitterCurrentPage(twitterSearchResult);
-                respPage.PreviousPageHtml = TwitterHelper.TwitterPrevPageLink(_sectionName, twitterSearchResult);
-                respPage.NextPageHtml = TwitterHelper.TwitterNextPageLink(_sectionName, twitterSearchResult);
+                respPage.PreviousPageHtml = TwitterHelper.TwitterPrevPageLink(_sectionName, twitterSearchResult, _cachedQuestionSEOFriendly);
+                respPage.NextPageHtml = TwitterHelper.TwitterNextPageLink(_sectionName, twitterSearchResult, _cachedQuestionSEOFriendly);
                 respPage.Responses = new List<ResponseViewData>();
 
                 foreach (TwitterSearchStatus status in twitterSearchResult.Statuses)
@@ -235,6 +250,41 @@ namespace One.Models
             }
         }
 
+        private static string ToFriendlyUrl(string urlToEncode)
+        {
+            urlToEncode = (urlToEncode ?? "").Trim().ToLower();
+
+            StringBuilder url = new StringBuilder();
+
+            foreach (char ch in urlToEncode)
+            {
+                switch (ch)
+                {
+                    case ' ':
+                        url.Append('-');
+                        break;
+                    case '&':
+                        url.Append("and");
+                        break;
+                    case '\'':
+                        break;
+                    default:
+                        if ((ch >= '0' && ch <= '9') ||
+                            (ch >= 'a' && ch <= 'z'))
+                        {
+                            url.Append(ch);
+                        }
+                        else
+                        {
+                            url.Append('-');
+                        }
+                        break;
+                }
+            }
+
+            return url.ToString();
+        } 
+
         static void CallWithTimeout(Action action, int timeoutMilliseconds)
         {
             Thread threadToKill = null;
@@ -278,6 +328,7 @@ namespace One.Models
                 //throw new TimeoutException();
             }
         }
+
 
     }
 }

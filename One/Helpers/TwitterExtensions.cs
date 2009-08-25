@@ -52,18 +52,18 @@ namespace One.Helpers
             return String.Format("Page {0}", result.Page);
         }
 
-        public static string TwitterNextPageLink(string sectionName, TwitterSearchResult result)
+        public static string TwitterNextPageLink(string sectionName, TwitterSearchResult result, string seoFriendlyQuestion)
         {
             if (!String.IsNullOrEmpty(result.NextPage))
-                return String.Format("» <a href=\"/{0}/{1}\" class=\"next\">Older</a>", sectionName, result.Page + 1);
+                return String.Format("» <a href=\"/{0}/{1}/{2}\" class=\"next\">Older</a>", sectionName, seoFriendlyQuestion, result.Page + 1);
             else
                 return string.Empty;
         }
 
-        public static string TwitterPrevPageLink(string sectionName, TwitterSearchResult result)
+        public static string TwitterPrevPageLink(string sectionName, TwitterSearchResult result, string seoFriendlyQuestion)
         {
             if (!String.IsNullOrEmpty(result.PreviousPage))
-                return String.Format("<a href=\"/{0}/{1}\" class=\"prev\">Newer</a> «", sectionName, result.Page - 1);
+                return String.Format("<a href=\"/{0}/{1}/{2}\" class=\"prev\">Newer</a> «", sectionName, seoFriendlyQuestion, result.Page - 1);
             else
                 return string.Empty;
         }

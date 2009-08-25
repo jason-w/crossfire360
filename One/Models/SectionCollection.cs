@@ -41,6 +41,7 @@ namespace One.Models
                         SectionName = s.SectionName,
                         SectionColor = s.SectionColor,
                         SectionQuestion = s.SectionQuestionTwitterfied,
+                        SectionQuestionSEOFriendly = s.SectionQuestionSEOFriendly,
                         Responses = (from r in s.GetResponsePageViewData(1).Responses
                                      select r).Take(1).ToList(),
                     }).ToList();

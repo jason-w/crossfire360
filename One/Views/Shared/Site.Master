@@ -29,7 +29,7 @@
                 <%foreach(SectionSummaryViewData summary in ((One.ViewData.BaseViewData) Model).SectionSummary){ %>
                 <div class="module" style="background-color: #<%=summary.SectionColor%>;">
                     <div class="nav">
-                        <a href="/<%=summary.SectionName%>"><%=summary.SectionName %></a>
+                        <a href="/<%=summary.SectionName%>/<%=summary.SectionQuestionSEOFriendly%>"><%=summary.SectionName %></a>
                     </div>
                 </div>
                 <%} %>
