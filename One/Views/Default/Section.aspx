@@ -50,7 +50,12 @@
                 <h3>This question was posted on <%=Model.QuestionRefreshedDate.ToShortDateString()%> 8AM PT and it will change again on <%=Model.QuestionRefreshedDate.AddDays(1).ToShortDateString()%> 8AM PT.</h3>    
         </div>
         <h2><b>Responses (<img src="../../Content/twitter-icon.jpg" /> <a href="http://twitter.com/?status=%23<%=Model.SectionResponsesTwitterHashTag%>">tweet yours</a>):</b></h2>
-    </div>                
+    </div>    
+    <%if (Model.State != ResponsePageViewDataState.UpdateToDateData) { %>
+    <div id="outofdate">
+        Yikes!  Looks like Twitter is taking a nap right now.  We'll bring you the latest responses as soon as Twitter wakes up.  The responses you see blow are at least <%= ((TimeSpan) (DateTime.Now - Model.LastUpdatedDateTime)).Seconds%> seconds old.
+    </div>            
+    <% } %>
     <%if (Model.Responses.Count == 0) {%>
     <div id="noresponse">
         <h2>Hurry, be the first!</h2>                    

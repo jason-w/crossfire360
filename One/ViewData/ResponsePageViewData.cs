@@ -6,8 +6,16 @@ using One.Models;
 
 namespace One.ViewData
 {
+    public enum ResponsePageViewDataState
+    {
+        UpdateToDateData,
+        OutdatedData,
+        DataUnavailable
+    }
+
     public class ResponsePageViewData : BaseViewData
     {
+        public ResponsePageViewDataState State { get; set; }
         public string SectionName { get; set; }
         public string SectionColor { get; set; }
         public string Question { get; set; }
@@ -19,5 +27,6 @@ namespace One.ViewData
         public List<ResponseViewData> Responses { get; set; }
         public DateTime QuestionRefreshedDate { get; set; }
         public string SectionResponsesTwitterHashTag { get; set; }
+        public DateTime LastUpdatedDateTime { get; set; }
     }
 }

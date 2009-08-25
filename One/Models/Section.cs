@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Threading;
 using Dimebrain.TweetSharp.Fluent;
 using Dimebrain.TweetSharp.Model;
 using Dimebrain.TweetSharp.Extensions;
@@ -20,12 +21,22 @@ namespace One.Models
         private string _sectionQuestionTwitterPassword;
         private string _sectionResponsesTwitterHashTag;
 
-        private DateTime _nextUpdateDateTime = DateTime.Now;
+        private DateTime _nextRawQuestionUpdateDateTime = DateTime.Now.AddDays(-1);
+        private SortedDictionary<int, DateTime> _nextRawResponsesUpdateDateTime = new SortedDictionary<int, DateTime>();
 
         private string _cachedQuestion = string.Empty;
+        private string _cachedQuestionHtmlEncoded = string.Empty;
         private string _cachedQuestionTwitterfied = string.Empty;
         private long _cachedQuestionId;
         private SortedDictionary<int, ResponsePageViewData> _cachedResponsePages = new SortedDictionary<int, ResponsePageViewData>();
+
+        private TwitterStatus _cachedRawQuestion = new TwitterStatus();
+        private SortedDictionary<int, TwitterSearchResult> _cachedRawResponses = new SortedDictionary<int, TwitterSearchResult>();
+        private DateTime _lastSuccessfulRawQuestionGet = DateTime.Now;
+        private SortedDictionary<int, DateTime> _lastSuccessfulRawResponsesGet = new SortedDictionary<int, DateTime>();
+        private bool _isLastRawQuestionGetSuccessful = false;
+        private SortedDictionary<int, bool> _isLastRawResponsesGetSuccessful = new SortedDictionary<int, bool>();
+        private bool _isRawQuestionSameAsBefore = false;
 
         public Section(string sectionName, string sectionColor, string sectionQuestionTwitterId, string sectionQuestionTwitterPassword, string sectionResponsesTwitterHashTag)
         {
@@ -34,6 +45,8 @@ namespace One.Models
             _sectionQuestionTwitterId = sectionQuestionTwitterId;
             _sectionQuestionTwitterPassword = sectionQuestionTwitterPassword;
             _sectionResponsesTwitterHashTag = sectionResponsesTwitterHashTag;
+
+            _nextRawQuestionUpdateDateTime = DateTime.Now.AddDays(-1);
         }
 
         public string SectionName
@@ -51,7 +64,7 @@ namespace One.Models
             get
             {
                 if (string.IsNullOrEmpty(_cachedQuestion))
-                    GetQuestionFromTwitter();
+                    GetResponsePageViewData(1);
 
                 return _cachedQuestionTwitterfied;
             }
@@ -59,24 +72,40 @@ namespace One.Models
 
         public ResponsePageViewData GetResponsePageViewData(int page)
         {
-            if (DateTime.Now >= _nextUpdateDateTime)
+            if (DateTime.Now >= _nextRawQuestionUpdateDateTime)
             {
-                _cachedResponsePages.Clear();
-                _nextUpdateDateTime = DateTime.Now.AddMinutes(1);
+                CallWithTimeout(GetRawQuestion, 1000);
+                if (_isLastRawQuestionGetSuccessful && !_isRawQuestionSameAsBefore)
+                {
+                    _cachedResponsePages.Clear();
+                    _cachedRawResponses.Clear();
+                    _lastSuccessfulRawResponsesGet.Clear();
+                    _nextRawResponsesUpdateDateTime.Clear();
+                    _cachedQuestion = _cachedRawQuestion.Text;
+                    _cachedQuestionHtmlEncoded = HttpUtility.HtmlEncode(_cachedQuestion);
+                    _cachedQuestionTwitterfied = TwitterHelper.TwitterfyText(_cachedQuestion);
+                    _cachedQuestionId = _cachedRawQuestion.Id;
+                }
             }
 
-            if (!_cachedResponsePages.ContainsKey(page))
+            if (!_nextRawResponsesUpdateDateTime.ContainsKey(page) || DateTime.Now >= _nextRawResponsesUpdateDateTime[page])
+            {
+                CallWithTimeout(GetRawResponses, page, 1000);
+            }
+
+            if (!_cachedResponsePages.ContainsKey(page) && _cachedRawResponses.ContainsKey(page))
             {
                 ResponsePageViewData respPage = new ResponsePageViewData();
+                TwitterSearchResult twitterSearchResult = _cachedRawResponses[page];
 
+                respPage.State = ResponsePageViewDataState.UpdateToDateData;
                 respPage.SectionName = _sectionName;
                 respPage.SectionColor = _sectionColor;
-                respPage.Question = GetQuestionFromTwitter();
-                respPage.QuestionHtmlEncoded = HttpUtility.HtmlEncode(respPage.Question);
+                respPage.Question = _cachedQuestion;
+                respPage.QuestionHtmlEncoded = _cachedQuestionHtmlEncoded;
                 respPage.QuestionTwitterfied = _cachedQuestionTwitterfied;
                 respPage.SectionResponsesTwitterHashTag = _sectionResponsesTwitterHashTag;
 
-                TwitterSearchResult twitterSearchResult = GetResponsesFromTwitter(page);
                 respPage.CurrentPageHtml = TwitterHelper.TwitterCurrentPage(twitterSearchResult);
                 respPage.PreviousPageHtml = TwitterHelper.TwitterPrevPageLink(_sectionName, twitterSearchResult);
                 respPage.NextPageHtml = TwitterHelper.TwitterNextPageLink(_sectionName, twitterSearchResult);
@@ -100,15 +129,46 @@ namespace One.Models
                 else
                     respPage.QuestionRefreshedDate = DateTime.Today.AddDays(-1);
 
-                _cachedResponsePages[page] = respPage;                
-            }
+                respPage.LastUpdatedDateTime = _nextRawResponsesUpdateDateTime[page];
 
-            return _cachedResponsePages[page];
+                _cachedResponsePages[page] = respPage;
+
+                return respPage;
+            }
+            else if (!_cachedResponsePages.ContainsKey(page) && !_cachedRawResponses.ContainsKey(page))
+            {
+                ResponsePageViewData respPage = new ResponsePageViewData();
+
+                respPage.State = ResponsePageViewDataState.DataUnavailable;
+                respPage.SectionName = _sectionName;
+                respPage.SectionColor = _sectionColor;
+                respPage.Question = _cachedQuestion;
+                respPage.QuestionHtmlEncoded = _cachedQuestionHtmlEncoded;
+                respPage.QuestionTwitterfied = _cachedQuestionTwitterfied;
+                respPage.SectionResponsesTwitterHashTag = _sectionResponsesTwitterHashTag;
+                respPage.Responses = new List<ResponseViewData>();
+
+                return respPage;
+            }
+            else if (_cachedResponsePages.ContainsKey(page) && DateTime.Now <= _nextRawResponsesUpdateDateTime[page])
+            {
+                ResponsePageViewData respPage = _cachedResponsePages[page];
+                respPage.State = ResponsePageViewDataState.UpdateToDateData;
+                return respPage;
+            }
+            
+
+            ResponsePageViewData outdatedRespPage = _cachedResponsePages[page];
+            outdatedRespPage.State = ResponsePageViewDataState.OutdatedData;
+            return outdatedRespPage;
+            
         }
 
-        private string GetQuestionFromTwitter()
+        private void GetRawQuestion()
         {
-            // Get the public timeline
+            _isLastRawQuestionGetSuccessful = false;
+            _isRawQuestionSameAsBefore = true;
+
             var twitter = FluentTwitter.CreateRequest()
                 .AuthenticateAs(_sectionQuestionTwitterId, _sectionQuestionTwitterPassword)
                 .Statuses()
@@ -117,28 +177,34 @@ namespace One.Models
                 .Take(1)
                 .AsJson();
 
-            // Sequential call for data and Convert response to data classes 
-            var request = twitter.Request();
-
-            var statuses = request.AsStatuses();
-
-            if (statuses == null || statuses.Count() == 0)
+            try
             {
-                
+                var request = twitter.Request();
+
+                var statuses = request.AsStatuses();
+
+                if (statuses != null && statuses.Count() > 0)
+                {
+                    var newRawQustion = statuses.First();
+
+                    _isRawQuestionSameAsBefore = newRawQustion.Text.Equals(_cachedRawQuestion.Text);
+
+                    _cachedRawQuestion = newRawQustion;
+                    _isLastRawQuestionGetSuccessful = true;
+                    _lastSuccessfulRawQuestionGet = DateTime.Now;
+                    _nextRawQuestionUpdateDateTime = DateTime.Now.AddMinutes(1);
+                }
             }
-            else
+            catch
             {
-                _cachedQuestionId = statuses.First().Id;
-                _cachedQuestion = statuses.First().Text;
-                _cachedQuestionTwitterfied = TwitterHelper.TwitterfyText(_cachedQuestion);
-
+                _isLastRawQuestionGetSuccessful = false;
             }
-
-            return _cachedQuestion;
         }
 
-        private TwitterSearchResult GetResponsesFromTwitter(int page)
+        private void GetRawResponses(int page)
         {
+            _isLastRawResponsesGetSuccessful[page] = false;
+
             var twitter = FluentTwitter.CreateRequest()
                     .Search()
                     .Query()
@@ -148,19 +214,70 @@ namespace One.Models
                     .Skip(page)
                     .AsJson();
 
-            var request = twitter.Request();
-
-            var searchResult = request.AsSearchResult();
-
-            if (searchResult == null)
+            try
             {
-                //Do some error handling
-                return null;
+                var request = twitter.Request();
+
+                var searchResult = request.AsSearchResult();
+
+                if (searchResult != null)
+                {
+                    _cachedRawResponses[page] = searchResult;
+                    _isLastRawResponsesGetSuccessful[page] = true;
+                    _lastSuccessfulRawResponsesGet[page] = DateTime.Now;
+                    _nextRawResponsesUpdateDateTime[page] = DateTime.Now.AddMinutes(1);
+                    _cachedResponsePages.Remove(page);
+                }
+            }
+            catch
+            {
+                _isLastRawResponsesGetSuccessful[page] = false;
+            }
+        }
+
+        static void CallWithTimeout(Action action, int timeoutMilliseconds)
+        {
+            Thread threadToKill = null;
+            Action wrappedAction = () =>
+            {
+                threadToKill = Thread.CurrentThread;
+                action();
+            };
+
+            IAsyncResult result = wrappedAction.BeginInvoke(null, null);
+            if (result.AsyncWaitHandle.WaitOne(timeoutMilliseconds))
+            {
+                wrappedAction.EndInvoke(result);
             }
             else
             {
-                return searchResult;
+                if (threadToKill != null)
+                    threadToKill.Abort();
+                //throw new TimeoutException();
             }
         }
+
+        static void CallWithTimeout(Action<int> action, int page, int timeoutMilliseconds)
+        {
+            Thread threadToKill = null;
+            Action wrappedAction = () =>
+            {
+                threadToKill = Thread.CurrentThread;
+                action(page);
+            };
+
+            IAsyncResult result = wrappedAction.BeginInvoke(null, null);
+            if (result.AsyncWaitHandle.WaitOne(timeoutMilliseconds))
+            {
+                wrappedAction.EndInvoke(result);
+            }
+            else
+            {
+                if (threadToKill != null)
+                    threadToKill.Abort();
+                //throw new TimeoutException();
+            }
+        }
+
     }
 }

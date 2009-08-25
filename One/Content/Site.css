@@ -210,6 +210,13 @@ img
 	border-top: 1px dashed #CCCCCC;
 }
 
+#outofdate
+{
+	background-color: #FFFFCC;
+	padding: 10px;
+	color: #777777;
+}
+
 #noresponse h2
 {
 	font-size: 20px;
