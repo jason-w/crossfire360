@@ -14,13 +14,13 @@
     </h3>
     <div id="share">
         <ul>
-            <li><a onclick="pageTracker._trackPageview('/exit/to/Mixx')" href="http://www.mixx.com/submit/story?page_url=www.crossfire360.com">Mixx</a></li>
-            <li><a onclick="pageTracker._trackPageview('/exit/to/Digg')" href="http://digg.com/submit?phase=2&url=www.crossfire360.com&title=<%=Model.QuestionHtmlEncoded%>&bodytext=">Digg</a></li>
-            <li><a onclick="pageTracker._trackPageview('/exit/to/Facebook')" href="http://www.facebook.com/share.php?u=www.crossfire360.com&t=<%=Model.QuestionHtmlEncoded%>">Facebook</a></li>
-            <li><a onclick="pageTracker._trackPageview('/exit/to/Delicious')" href="http://del.icio.us/post?v=4&noui&jump=close&url=www.crossfire360.com&title=<%=Model.QuestionHtmlEncoded%>">delicious</a></li>
-            <li><a onclick="pageTracker._trackPageview('/exit/to/Reddit')" href="http://reddit.com/submit?url=www.crossfire360.com&title=<%=Model.QuestionHtmlEncoded%>">reddit</a></li>
-            <li><a onclick="pageTracker._trackPageview('/exit/to/StumbleUpon')" href="http://www.stumbleupon.com/submit?url=www.crossfire360.com&title=<%=Model.QuestionHtmlEncoded%>">StumbleUpon</a></li>
-            <li><a onclick="pageTracker._trackPageview('/exit/to/MySpace')" href="http://www.myspace.com/Modules/PostTo/Pages/?t=<%=Model.QuestionHtmlEncoded%>&c=&u=www.crossfire360.com">MySpace</a></li>
+            <li><a onclick="pageTracker._trackPageview('/exit/to/Mixx')" href="http://www.mixx.com/submit/story?page_url=<%=Request.Url%>">Mixx</a></li>
+            <li><a onclick="pageTracker._trackPageview('/exit/to/Digg')" href="http://digg.com/submit?phase=2&url=<%=Request.Url%>&title=<%=Model.QuestionHtmlEncoded%>&bodytext=">Digg</a></li>
+            <li><a onclick="pageTracker._trackPageview('/exit/to/Facebook')" href="http://www.facebook.com/share.php?u=<%=Request.Url%>&t=<%=Model.QuestionHtmlEncoded%>">Facebook</a></li>
+            <li><a onclick="pageTracker._trackPageview('/exit/to/Delicious')" href="http://del.icio.us/post?v=4&noui&jump=close&url=<%=Request.Url%>&title=<%=Model.QuestionHtmlEncoded%>">delicious</a></li>
+            <li><a onclick="pageTracker._trackPageview('/exit/to/Reddit')" href="http://reddit.com/submit?url=<%=Request.Url%>&title=<%=Model.QuestionHtmlEncoded%>">reddit</a></li>
+            <li><a onclick="pageTracker._trackPageview('/exit/to/StumbleUpon')" href="http://www.stumbleupon.com/submit?url=<%=Request.Url%>&title=<%=Model.QuestionHtmlEncoded%>">StumbleUpon</a></li>
+            <li><a onclick="pageTracker._trackPageview('/exit/to/MySpace')" href="http://www.myspace.com/Modules/PostTo/Pages/?t=<%=Model.QuestionHtmlEncoded%>&c=&u=<%=Request.Url%>">MySpace</a></li>
             <li><a onclick="pageTracker._trackPageview('/exit/to/Twitter')" href="http://twitter.com/?status=RT%20@cf360%20<%=Model.QuestionHtmlEncoded%>">Twitter</a></li>
         </ul>
     </div>
@@ -53,7 +53,7 @@
     </div>    
     <%if (Model.State != ResponsePageViewDataState.UpdateToDateData) { %>
     <div id="outofdate">
-        Yikes!  Looks like Twitter is taking a nap right now.  We'll bring you the latest responses as soon as Twitter wakes up.  The responses you see blow are at least <%= ((TimeSpan) (DateTime.Now - Model.LastUpdatedDateTime)).TotalSeconds()%> seconds old.
+        Yikes!  Looks like Twitter is taking a nap right now.  We'll bring you the latest responses as soon as Twitter wakes up.  The responses you see blow are at least <%= ((TimeSpan) (DateTime.Now - Model.LastUpdatedDateTime)).TotalSeconds%> seconds old.
     </div>            
     <% } %>
     <%if (Model.Responses.Count == 0) {%>

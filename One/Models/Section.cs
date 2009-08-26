@@ -269,6 +269,8 @@ namespace One.Models
                         break;
                     case '\'':
                         break;
+                    case '?':
+                        break;
                     default:
                         if ((ch >= '0' && ch <= '9') ||
                             (ch >= 'a' && ch <= 'z'))
